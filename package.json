@@ -1,0 +1,15 @@
+{
+  "name": "students",
+  "version": "1.0.0",
+  "description": "A simple REST API for managing student records built with Node.js, Express, and MongoDB. This API supports creating, retrieving, updating, and deleting student information, along with additional features like health checks, meaningful logs, and unit tests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "winston": "^3.17.0"
+  }
+}
