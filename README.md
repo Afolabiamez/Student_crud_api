@@ -39,7 +39,7 @@ To run the Student CRUD API locally or inside a Docker container, follow the ste
 git clone https://github.com/<your-github-username>/student-crud-api.git
 cd student-crud-api
 
-    2. Set up environment variables
+### 2. Set up environment variables
 
 Create a .env file in the root of the project with the following content:
 
