@@ -9,3 +9,4 @@ router.put('/api/v1/students/:id', studentController.updateStudent);
 router.delete('/api/v1/students/:id', studentController.deleteStudent);
 
 module.exports = router;
+
