@@ -4,12 +4,20 @@
   "description": "A simple REST API for managing student records built with Node.js, Express, and MongoDB. This API supports creating, retrieving, updating, and deleting student information, along with additional features like health checks, meaningful logs, and unit tests.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "install-dependencies": "npm install",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "jest --runInBand",
+    "migrate": "echo MongoDB doesn't require migrations. Make sure your model files define the schema."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "make": "^0.8.1",
     "winston": "^3.17.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

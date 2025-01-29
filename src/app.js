@@ -20,7 +20,7 @@ app.use(studentRoutes);
 // Error handling middleware
 app.use(errorHandler);
 
-// Health Check
+// Health Check, checks health 
 app.get('/healthcheck', (req, res) => {
     res.status(200).json({ status: 'API is healthy!' });
 });

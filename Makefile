@@ -12,7 +12,7 @@ dev:
 
 # Run Jest tests
 test:
-	@jest --runInBand
+	@npx jest --runInBand
 
 # Build the application (if there is a build step, e.g., TypeScript)
 build:
@@ -24,4 +24,4 @@ migrate:
 
 # Run API locally
 run:
-	@npm start
+	@node src/server.js

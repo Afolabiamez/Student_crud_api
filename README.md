@@ -20,3 +20,12 @@ Ensure the following are installed on your system:
 
 ## Project Structure
 
+├── src │ ├── config │ │ └── db.js # MongoDB connection logic │ ├── controllers │ │ └── studentController.js # API business logic │ ├── models │ │ └── studentModel.js # MongoDB schema │ ├── routes │ │ └── studentRoutes.js # Routes for the API │ └── server.js # Express app and middleware setup ├── tests │ └── studentApi.test.js # Jest tests ├── .env # Environment variables ├── Makefile # Commands for building and running the project ├── Postman_Collection.json # Postman Collection ├── README.md # Documentation ├── package.json # npm dependencies
+
+
+## Setup and Installation
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/<your-github-username>/student-crud-api.git
+cd student-crud-api
