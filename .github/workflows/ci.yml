@@ -16,11 +16,27 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4 # Fetches the latest code
 
-      - name: Remove old dependencies and reinstall
-        shell: pwsh # Use PowerShell (pwsh) if on Windows
+      - name: Remove node_modules and package-lock.json
         run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+          echo "Running on Windows"
+          cmd.exe /c "rmdir /s /q node_modules & del package-lock.json 2>nul"
+          else
+          echo "Running on Linux/Mac"
           rm -rf node_modules package-lock.json || echo "Files not found"
+          fi
+        shell: bash
+
+      - name: Install dependencies (Cross-Platform)
+        run: |
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+          echo "Installing dependencies on Windows"
           npm ci
+          else
+          echo "Installing dependencies on Linux/Mac"
+          npm ci
+          fi
+        shell: bash
 
       - name: Check installed modules
         run: ls -l node_modules | grep winston || echo "winston is missing!"
