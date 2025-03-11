@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4 # Fetches the latest code
 
       - name: Remove old dependencies and reinstall
-        shell: bash # Use PowerShell (pwsh) if on Windows
+        shell: pwsh # Use PowerShell (pwsh) if on Windows
         run: |
           rm -rf node_modules package-lock.json || echo "Files not found"
           npm ci
