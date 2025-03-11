@@ -1,6 +1,7 @@
 # Variables
 IMAGE_NAME=student_crud_api
 VERSION=1.0.0
+CONTAINER_NAME=student_crud_api_container
 
 # Install dependencies
 install:
@@ -14,56 +15,28 @@ start:
 docker-build:
 	@docker build -t $(IMAGE_NAME):$(VERSION) .
 
-# Run the Docker container with environment variables
+# Run the Docker container
 docker-run:
-	@docker run --rm -p 3000:3000 --env-file .env $(IMAGE_NAME):$(VERSION)
+	@docker run --rm -p 3000:3000 --env-file .env --name $(CONTAINER_NAME) $(IMAGE_NAME):$(VERSION)
 
+# Run Jest tests inside Docker container
+docker-test:
+	@docker run --rm --env-file .env $(IMAGE_NAME):$(VERSION) npm test
+
+# Perform code linting inside Docker container
+docker-lint:
+	@docker run --rm $(IMAGE_NAME):$(VERSION) npm run lint
 
 # Remove dangling images
 docker-clean:
 	@docker system prune -f
 
-
 # Run the app in development with Nodemon
 dev:
 	@nodemon src/server.js
-
-# Run Jest tests
-test:
-	@npx jest --runInBand
-
-# Build the application (if there is a build step, e.g., TypeScript)
-build:
-	@echo "No build step required for this project"
-
-
-
-# Run migrations (for schema setup, e.g., using Mongoose hooks or external tools)
-migrate:
-	@echo "MongoDB doesn't require migrations. Make sure your model files define the schema."
 
 # Run API locally
 run:
 	@node src/server.js
 
 
-
-# Define variables
-# IMAGE_NAME = amezdoc/student-api
-# VERSION = 1.0.0
-# FULL_IMAGE = $(IMAGE_NAME):$(TAG)
-
-# build:
-# 	docker build -t $(FULL_IMAGE) .
-
-# test:
-# 	docker run --rm $(FULL_IMAGE) npm test
-
-# lint:
-# 	docker run --rm $(FULL_IMAGE) npm run lint
-
-# push:
-# 	docker login -u $(DOCKER_USERNAME) -p $(DOCKER_PASSWORD)
-# 	docker push $(FULL_IMAGE)
-
-# all: build test lint push
