@@ -16,9 +16,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4 # Fetches the latest code
 
-      - name: Install dependencies
+      - name: Remove old dependencies and reinstall
+        shell: bash # Use PowerShell (pwsh) if on Windows
         run: |
-          rm -rf node_modules package-lock.json
+          rm -rf node_modules package-lock.json || echo "Files not found"
           npm ci
 
       - name: Check installed modules
