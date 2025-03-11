@@ -15,6 +15,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 # Fetches the latest code
+<<<<<<< HEAD
         
       - name: Check installed modules
         run: ls -l node_modules | grep winston || echo "winston is missing!"
@@ -22,11 +23,21 @@ jobs:
       - name: Install dependencies
         run: npm ci 
         
+=======
+
+      - name: Check installed modules
+        run: ls -l node_modules | grep winston || echo "winston is missing!"
+
+      - name: Install dependencies
+        run: npm ci
+
+>>>>>>> 6e40d7c (yml changw)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3 # Enables better Docker builds
 
       - name: Build API
         run: make docker-build. # Uses Makefile to build the Docker image
+<<<<<<< HEAD
         
       - name: Start MongoDB
         run: make mongo-start
@@ -34,6 +45,15 @@ jobs:
       - name: Run tests
         run: make docker-test. # Runs tests inside the container
         
+=======
+
+      - name: Start MongoDB
+        run: make mongo-start
+
+      - name: Run tests
+        run: make docker-test. # Runs tests inside the container
+
+>>>>>>> 6e40d7c (yml changw)
       - name: Stop MongoDB
         run: make mongo-stop # Stops MongoDB to clean up
 
