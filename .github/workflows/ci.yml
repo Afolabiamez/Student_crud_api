@@ -15,12 +15,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 # Fetches the latest code
+
+      - name: Install dependencies
+        run: npm ci
         
       - name: Check installed modules
         run: ls -l node_modules | grep winston || echo "winston is missing!"
-        
-      - name: Install dependencies
-        run: npm ci 
         
       - name: Build API
         run: make docker-build # Uses Makefile to build the Docker image
