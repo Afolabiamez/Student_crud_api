@@ -27,7 +27,10 @@ jobs:
 
       - name: Build API
         run: make build # Uses Makefile to build the Docker image
-
+        
+      - name: Start MongoDB
+        run: make mongo-start
+        
       - name: Run tests
         run: make test # Runs tests inside the container
 
