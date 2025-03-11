@@ -15,7 +15,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4 # Fetches the latest code
-<<<<<<< HEAD
         
       - name: Check installed modules
         run: ls -l node_modules | grep winston || echo "winston is missing!"
@@ -23,42 +22,20 @@ jobs:
       - name: Install dependencies
         run: npm ci 
         
-=======
-
-      - name: Check installed modules
-        run: ls -l node_modules | grep winston || echo "winston is missing!"
-
-      - name: Install dependencies
-        run: npm ci
-
->>>>>>> 6e40d7c (yml changw)
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3 # Enables better Docker builds
-
       - name: Build API
-        run: make docker-build. # Uses Makefile to build the Docker image
-<<<<<<< HEAD
+        run: make docker-build # Uses Makefile to build the Docker image
         
       - name: Start MongoDB
         run: make mongo-start
         
       - name: Run tests
-        run: make docker-test. # Runs tests inside the container
+        run: make docker-test # Runs tests inside the container
         
-=======
-
-      - name: Start MongoDB
-        run: make mongo-start
-
-      - name: Run tests
-        run: make docker-test. # Runs tests inside the container
-
->>>>>>> 6e40d7c (yml changw)
       - name: Stop MongoDB
         run: make mongo-stop # Stops MongoDB to clean up
 
       - name: Perform code linting
-        run: make docker-lint. # Runs linter inside the container
+        run: make docker-lint # Runs linter inside the container
 
       - name: Log in to DockerHub
         env:
@@ -67,4 +44,4 @@ jobs:
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       - name: Push Docker Image
-        run: make push # Pushes the Docker image to DockerHub
+        run: make docker-push # Pushes the Docker image to DockerHub
