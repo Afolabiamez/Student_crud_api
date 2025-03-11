@@ -13,29 +13,32 @@ jobs:
     runs-on: self-hosted # Runs on your local machine
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Fetches the latest code
+        
       - name: Check installed modules
         run: ls -l node_modules | grep winston || echo "winston is missing!"
         
       - name: Install dependencies
         run: npm ci 
         
-      - name: Checkout code
-        uses: actions/checkout@v4 # Fetches the latest code
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3 # Enables better Docker builds
 
       - name: Build API
-        run: make build # Uses Makefile to build the Docker image
+        run: make docker-build. # Uses Makefile to build the Docker image
         
       - name: Start MongoDB
         run: make mongo-start
         
       - name: Run tests
-        run: make test # Runs tests inside the container
+        run: make docker-test. # Runs tests inside the container
+        
+      - name: Stop MongoDB
+        run: make mongo-stop # Stops MongoDB to clean up
 
       - name: Perform code linting
-        run: make lint # Runs linter inside the container
+        run: make docker-lint. # Runs linter inside the container
 
       - name: Log in to DockerHub
         env:
