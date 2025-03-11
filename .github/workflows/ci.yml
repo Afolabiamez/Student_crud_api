@@ -5,44 +5,48 @@ on:
     branches:
       - main
     paths:
-      - "src/**" # Runs only if changes are made in the "src" directory
+      - "src/**"
   workflow_dispatch: # Allows manual triggering
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted # Runs on your local machine
+    runs-on: self-hosted # Uses your local machine
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4 # Fetches the latest code
+        uses: actions/checkout@v4
 
       - name: Remove node_modules and package-lock.json (Cross-Platform)
         shell: bash
         run: |
-          case "$RUNNER_OS" in
-            Windows)
-              echo "Running on Windows"
-              powershell Remove-Item -Recurse -Force node_modules, package-lock.json 2> $null || echo "Files not found"
-              ;;
-            Linux|macOS)
-              echo "Running on Linux/macOS"
-              rm -rf node_modules package-lock.json || echo "Files not found"
-              ;;
-          esac
+          echo "Detected OS: $RUNNER_OS"
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            echo "Running on Windows"
+            pwsh -Command "Remove-Item -Recurse -Force node_modules, package-lock.json -ErrorAction SilentlyContinue"
+          else
+            echo "Running on Linux/macOS"
+            rm -rf node_modules package-lock.json || echo "Files not found"
+          fi
 
       - name: Install dependencies (Cross-Platform)
         shell: bash
         run: |
-          case "$RUNNER_OS" in
-            Windows)
-              echo "Installing dependencies on Windows"
+          echo "Detected OS: $RUNNER_OS"
+          if [[ "$RUNNER_OS" == "Windows" ]]; then
+            echo "Installing dependencies on Windows"
+            if [ -f package-lock.json ]; then
               npm ci
-              ;;
-            Linux|macOS)
-              echo "Installing dependencies on Linux/macOS"
+            else
+              npm install
+            fi
+          else
+            echo "Installing dependencies on Linux/macOS"
+            if [ -f package-lock.json ]; then
               npm ci
-              ;;
-          esac
+            else
+              npm install
+            fi
+          fi
 
       - name: Check installed modules
         run: ls -l node_modules | grep winston || echo "winston is missing!"
@@ -63,7 +67,7 @@ jobs:
           "
 
       - name: Perform code linting
-        run: make docker-lint # Runs linter inside the container
+        run: make docker-lint
 
       - name: Log in to DockerHub
         env:
@@ -72,4 +76,4 @@ jobs:
         run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       - name: Push Docker Image
-        run: make docker-push # Pushes the Docker image to DockerHub
+        run: make docker-push
