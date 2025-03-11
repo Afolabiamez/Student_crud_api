@@ -17,22 +17,23 @@ jobs:
         uses: actions/checkout@v4 # Fetches the latest code
 
       - name: Install dependencies
-        run: npm ci
-        
+        run: |
+          rm -rf node_modules package-lock.json
+          npm ci
+
       - name: Check installed modules
         run: ls -l node_modules | grep winston || echo "winston is missing!"
-        
-      - name: Build API
-        run: make docker-build # Uses Makefile to build the Docker image
-        
-      - name: Start MongoDB
-        run: make mongo-start
-        
-      - name: Run tests
-        run: make docker-test # Runs tests inside the container
-        
-      - name: Stop MongoDB
-        run: make mongo-stop # Stops MongoDB to clean up
+
+      - name: Set up Docker network
+        run: docker network create student_network || true
+
+      - name: Start MongoDB container
+        run: docker run -d --network student_network --name mongodb mongo:latest
+
+      - name: Build and test Student CRUD API container
+        run: |
+          docker build -t student_crud_api .
+          docker run --network student_network -e MONGO_URI="mongodb://mongodb:27017/students" -it student_crud_api npm test
 
       - name: Perform code linting
         run: make docker-lint # Runs linter inside the container
