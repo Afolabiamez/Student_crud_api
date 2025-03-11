@@ -33,7 +33,11 @@ jobs:
       - name: Build and test Student CRUD API container
         run: |
           docker build -t student_crud_api .
-          docker run --network student_network -e MONGO_URI="mongodb://mongodb:27017/students" -it student_crud_api sh -c "npm install && npx jest --runInBand"
+          docker run --network student_network -e MONGO_URI="mongodb://mongodb:27017/students" -it student_crud_api sh -c "
+          npm install --legacy-peer-deps && 
+          ls -l node_modules | grep winston || echo 'winston is missing!'; 
+          npx jest --runInBand
+          "
 
       - name: Perform code linting
         run: make docker-lint # Runs linter inside the container
