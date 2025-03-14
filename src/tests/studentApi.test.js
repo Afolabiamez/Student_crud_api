@@ -23,10 +23,13 @@ afterEach(async () => {
 
 afterAll(async () => {
   if (server) {
-    server.close(); // Close the server
+    await new Promise((resolve, reject) => {
+      server.close((err) => (err ? reject(err) : resolve()));
+    });
   }
   if (mongoose.connection.readyState !== 0) {
     await mongoose.connection.close();
+    await mongoose.disconnect();
   }
 });
 
