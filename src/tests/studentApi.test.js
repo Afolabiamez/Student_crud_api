@@ -31,6 +31,7 @@ afterAll(async () => {
     await mongoose.connection.close();
     await mongoose.disconnect();
   }
+  process.exit(0);
 });
 
 describe("Student CRUD API", () => {
