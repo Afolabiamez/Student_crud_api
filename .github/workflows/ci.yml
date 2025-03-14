@@ -43,9 +43,9 @@ jobs:
 
       - name: Start MongoDB container
         run: |
-          ps -a --filter "name=mongodb" --format "{{.ID}}" | ForEach-Object { docker rm -f $_ }
+          docker ps -a --filter "name=mongodb" --format "{{.ID}}" | xargs -r docker rm -f
           docker run -d --network student_network --name mongodb mongo:latest
-        shell: powershell
+        shell: bash
 
       - name: Build Student CRUD API container
         run: docker build -t student_crud_api .
