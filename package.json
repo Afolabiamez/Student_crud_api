@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "install-dependencies": "npm install",
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
     "test": "jest --runInBand",
     "migrate": "echo MongoDB doesn't require migrations. Make sure your model files define the schema."
   },
