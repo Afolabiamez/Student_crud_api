@@ -45,7 +45,7 @@ jobs:
         run: |
           ps -a --filter "name=mongodb" --format "{{.ID}}" | ForEach-Object { docker rm -f $_ }
           docker run -d --network student_network --name mongodb mongo:latest
-        shell: pwsh
+        shell: powershell
 
       - name: Build Student CRUD API container
         run: docker build -t student_crud_api .
