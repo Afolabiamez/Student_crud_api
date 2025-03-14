@@ -52,7 +52,7 @@ jobs:
 
       - name: Run Jest tests inside the container
         run: |
-          docker run --network student_network -e MONGO_URI="mongodb://mongodb:27017/students" -it student_crud_api sh -c "
+          docker run --network student_network -e MONGO_URI="mongodb://mongodb:27017/students" student_crud_api sh -c "
           npm install --legacy-peer-deps &&  
           npx jest --runInBand
           "
