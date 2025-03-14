@@ -1,9 +1,12 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
+const waitForMongo = require("../db/waitForMongo");
 const app = require("../app"); // Import your Express app
 const Student = require("../models/studentModel");
 
 beforeAll(async () => {
+  const mongoUri = process.env.MONGO_URI || "mongodb://mongodb:27017/students";
+  await waitForMongo(mongoUri);
   if (mongoose.connection.readyState === 0) {
     throw new Error(
       "MongoDB is not connected. Ensure the app initializes the database connection."
