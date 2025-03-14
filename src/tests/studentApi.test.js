@@ -4,6 +4,8 @@ const waitForMongo = require("../db/waitForMongo");
 const app = require("../app"); // Import your Express app
 const Student = require("../models/studentModel");
 
+let server;
+
 beforeAll(async () => {
   const mongoUri = process.env.MONGO_URI || "mongodb://mongodb:27017/students";
   await waitForMongo(mongoUri);
@@ -12,6 +14,7 @@ beforeAll(async () => {
       "MongoDB is not connected. Ensure the app initializes the database connection."
     );
   }
+  server = app.listen(process.env.PORT || 3000);
 });
 
 afterEach(async () => {
@@ -19,6 +22,9 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+  if (server) {
+    server.close(); // Close the server
+  }
   if (mongoose.connection.readyState !== 0) {
     await mongoose.connection.close();
   }
