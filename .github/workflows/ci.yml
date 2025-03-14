@@ -39,6 +39,7 @@ jobs:
 
       - name: Set up Docker network
         run: docker network create student_network || true
+        shell: bash
 
       - name: Start MongoDB container
         run: docker run -d --network student_network --name mongodb mongo:latest
