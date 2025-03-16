@@ -54,7 +54,7 @@ jobs:
         run: |
           docker run --network student_network -e MONGO_URI="mongodb://mongodb:27017/students" student_crud_api sh -c "
           npm install --legacy-peer-deps &&  
-          npx jest --runInBand
+          npx jest --runInBand --forceExit --detectOpenHandles
           "
 
       - name: Stop and remove MongoDB container

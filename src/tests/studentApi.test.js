@@ -34,6 +34,8 @@ afterAll(async () => {
   process.exit(0);
 });
 
+// jest --detectOpenHandles
+
 describe("Student CRUD API", () => {
   test("POST /api/v1/students - Add a new student", async () => {
     const studentData = { name: "John Doe", age: 20, class: "CS101" };
