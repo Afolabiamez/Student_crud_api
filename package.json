@@ -6,6 +6,7 @@
   "scripts": {
     "install-dependencies": "npm install",
     "start": "node src/app.js",
+    "lint": "eslint .",
     "dev": "nodemon src/app.js",
     "test": "jest --runInBand --forceExit --detectOpenHandles",
     "migrate": "echo MongoDB doesn't require migrations. Make sure your model files define the schema."
