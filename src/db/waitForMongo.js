@@ -1,10 +1,10 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const waitForMongo = async (uri, retries = 10, delay = 5000) => {
   while (retries > 0) {
     try {
       await mongoose.connect(uri);
-      console.log("✅ MongoDB Connected");
+      console.log('✅ MongoDB Connected');
       return;
     } catch (error) {
       console.log(
@@ -14,7 +14,7 @@ const waitForMongo = async (uri, retries = 10, delay = 5000) => {
       await new Promise((res) => setTimeout(res, delay));
     }
   }
-  throw new Error("❌ MongoDB connection failed after multiple attempts.");
+  throw new Error('❌ MongoDB connection failed after multiple attempts.');
 };
 
 module.exports = waitForMongo;
