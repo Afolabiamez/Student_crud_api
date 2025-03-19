@@ -12,6 +12,9 @@ jobs:
   build-and-deploy:
     name: push docker image to dockerhub
     runs-on: self-hosted
+    env:
+      DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
 
     steps:
       - name: Checkout code
