@@ -1,5 +1,5 @@
 # ---- Build Stage ----
-    FROM node:18-alpine AS builder
+    FROM node:23-alpine AS builder
     WORKDIR /app
     
     # Copy package.json and package-lock.json

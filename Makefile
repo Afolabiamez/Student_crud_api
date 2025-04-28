@@ -1,10 +1,11 @@
 # Variables
-# IMAGE_NAME=student_crud_api
-# VERSION=1.0.0
+IMAGE_NAME=student_crud_api
+VERSION=1.0.0
 CONTAINER_NAME=student_crud_api_container
 MONGO_CONTAINER_NAME=mongo_test
 MONGO_IMAGE=mongo:latest
 MONGO_PORT=27017
+DOCKERHUB_USERNAME=amezdoc
 
 # Install dependencies
 install:
@@ -14,16 +15,16 @@ install:
 start:
 	@node src/app.js
 
-# # Build the Docker image
-# docker-build:
-# 	@docker build -t $(IMAGE_NAME):$(VERSION) .
+# Build the Docker image
+docker-build:
+	@docker build -t $(IMAGE_NAME):$(VERSION) .
 
 # Run the MongoDB container
 mongo-start:
 	@docker run -d --name $(MONGO_CONTAINER_NAME) -p $(MONGO_PORT):27017 $(MONGO_IMAGE)
 
 
-# Run the Docker container with MongoDB connection
+# Run the Docker container with MongoDB connection (for manual testing)
 docker-run:
 	@docker run --rm -p 3000:3000 --env-file .env --name $(CONTAINER_NAME) --network="host" $(IMAGE_NAME):$(VERSION)
 
@@ -54,6 +55,6 @@ run:
 	@node src/app.js
 
 
-# docker-push:
-# 	@docker tag $(IMAGE_NAME):$(VERSION) $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
-# 	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
+docker-push:
+	@docker tag $(IMAGE_NAME):$(VERSION) $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
+	@docker push $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION)
